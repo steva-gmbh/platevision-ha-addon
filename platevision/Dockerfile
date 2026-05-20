@@ -17,7 +17,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Python deps zuerst (bessere Docker-Cache-Nutzung)
 COPY src/requirements.txt /app/requirements.txt
-RUN pip install --upgrade pip && pip install -r /app/requirements.txt
+RUN sed -i 's/ --hash=.*//g' /app/requirements.txt
+RUN pip install --upgrade pip && pip install --no-cache-dir -r /app/requirements.txt
 
 # App-Code
 COPY src/ /app/
